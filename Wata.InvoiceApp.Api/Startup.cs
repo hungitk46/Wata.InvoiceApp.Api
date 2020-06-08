@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NSwag.Generation.AspNetCore;
+using NSwag.Generation.Processors.Security;
+using System.Linq;
 using Wata.InvoiceApp.Api.Services;
 using Wata.InvoiceApp.Application.Common.Interfaces;
 
@@ -30,6 +33,21 @@ namespace Wata.InvoiceApp.Api
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+            // Setting up Swagger
+
+            services.AddOpenApiDocument(configure =>
+            {
+                configure.Title = "Wata Invoice App API";
+                configure.AddSecurity("JWT", Enumerable.Empty<string>(), new NSwag.OpenApiSecurityScheme {
+                    Type = NSwag.OpenApiSecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    In = NSwag.OpenApiSecurityApiKeyLocation.Header,
+                    Description = "Type into the textbox: Bearer {your JWT token}."
+                });
+
+                configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+            });
+
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -40,6 +58,11 @@ namespace Wata.InvoiceApp.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            // Setup use Swagger
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
