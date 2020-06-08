@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Wata.InvoiceApp.Application.Common.Interfaces;
 using Wata.InvoiceApp.Infrastructure.Data;
 using Wata.InvoiceApp.Infrastructure.Models;
 
@@ -17,6 +18,8 @@ namespace Wata.InvoiceApp.Infrastructure
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();

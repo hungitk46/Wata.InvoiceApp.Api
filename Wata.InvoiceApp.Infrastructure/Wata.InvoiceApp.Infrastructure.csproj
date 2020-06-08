@@ -15,4 +15,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Wata.InvoiceApp.Application\Wata.InvoiceApp.Application.csproj" />
+  </ItemGroup>
+
 </Project>

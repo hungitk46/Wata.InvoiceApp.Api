@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Wata.InvoiceApp.Application\Wata.InvoiceApp.Application.csproj" />
     <ProjectReference Include="..\Wata.InvoiceApp.Infrastructure\Wata.InvoiceApp.Infrastructure.csproj" />
   </ItemGroup>
 
