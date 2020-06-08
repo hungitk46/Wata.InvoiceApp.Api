@@ -23,8 +23,13 @@ namespace Wata.InvoiceApp.Api
         {
 
             Infrastructure.DependencyInjection.AddInfrastructure(services, Configuration);
+            Application.DependencyInjection.AddApplication(services);
 
-            services.AddScoped<ICurrentUserService>(provider => provider.GetService<CurrentUserService>());
+            services.AddScoped<ICurrentUserService,CurrentUserService>();
+
+            services.AddControllersWithViews();
+            services.AddRazorPages();
+
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

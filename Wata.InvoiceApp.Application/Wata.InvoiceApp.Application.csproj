@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Wata.InvoiceApp.Domain\Wata.InvoiceApp.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Invoices\Queries\" />
+  </ItemGroup>
+
 </Project>
